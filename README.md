@@ -14,26 +14,27 @@ source env_madgwick/bin/activate
 pip install -r requirements.txt
 ```
 
-### Usage
-```python
->>> from madgwick.madgwick import computeGravity
->>> computeGravity(acc, gyr)
-```
-See the doc of madgwick.madgwick.computeGravity for more details.
-
-
 ### Code compilation
 Compile the cython code for Madgwick (for now not a clean install, need to rework on the setup):
 ```bash
 python setup.py build_ext --inplace
 ```
 
-## Run the example
+
+## Usage
+### Basic usage
+```python
+>>> from madgwick.madgwick import computeGravity
+>>> computeGravity(acc, gyr)
+```
+See the doc of madgwick.madgwick.computeGravity for more details.
+
+### Example script
+A more detailed use-case with an example dataset can be found in the [example folder](example). example/madgwick_imu_example.py
 ```bash
 python example/madgwick_imu_example.py
 ```
 
 If everything went well you should get the output plot in example/script_out.png :
-
 
 ![Alt text](example/script_out.png)
