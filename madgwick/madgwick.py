@@ -57,7 +57,6 @@ def computeGravity(acc, gyr, mag=None, sampleFreq=300.,
     if mag is None:
         allRotations = madgwickIMU(acc, gyr, quat0, beta, sampleFreq)
     else:
-        mag = mag.values
         allRotations = madgwickAHRS(acc, gyr, mag, quat0, beta, sampleFreq)
 
     # Gravity estimate by applying the rotations to a vertical vector
