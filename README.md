@@ -1,40 +1,37 @@
 # madgwick_imu
-Madgwick gravity estimate in Cython
+Attitude estimate using Madgwick filter, in Cython. See the [original publication and code](https://x-io.co.uk/open-source-imu-and-ahrs-algorithms/). 
 
 ## Installation
-### Prerequisites
-- Python >= 3.6
-
-### Virtual environment
-Create the virtual environment and install the requirements:
-
+From the desired python (>=3.6) environment, clone the repository. From the repository's directory, install the requirements and run the compilation and installation pipelines:
 ```bash
-python3 -m venv env_madgwick
-source env_madgwick/bin/activate
-pip install -r requirements.txt
-```
-
-### Code compilation
-Compile the cython code for Madgwick (for now not a clean install, need to rework on the setup):
-```bash
-python setup.py build_ext --inplace
+$ git clone https://github.com/rfayat/madgwick_imu.git
+$ cd madgwick_imu
+$ pip install -r requirements.txt
+$ python setup.py build_ext --inplace
+$ pip install .
 ```
 
 
 ## Usage
 ### Basic usage
+The API is taken from [the implementation available in the ahrs module](https://ahrs.readthedocs.io/en/latest/filters/madgwick.html). Filtering data can be done as follows:
 ```python
->>> from madgwick.madgwick import computeGravity
->>> computeGravity(acc, gyr)
+from madgwick import Madgwick
+# Create the filter and compute the quaternions
+mf =  Madgwick(acc=...,  # array of x, y, z accelerometer values (in G)
+               gyr=...,  # array of x, y, z gyroscope values (in radians)
+               frequency=...,  # sampling rate (in Herz)
+               gain=...)  # filter gain (float)
+# Rotate [0, 0, 1] by the resulting quaternions
+# Return the estimate of the xyz coordinates of gravity
+# in the sensor's reference frame
+gravity_estimate = mf.gravity_estimate()
 ```
-See the doc of madgwick.madgwick.computeGravity for more details.
 
 ### Example script
-A more detailed use-case with an example dataset can be found in the [example folder](example). example/madgwick_imu_example.py
+A data sample and example script is available in the [example folder](example). To run it, install this package as well as pandas and matplotlib and run:
 ```bash
-python example/madgwick_imu_example.py
+python -m example.madgwick_imu_example
 ```
-
-If everything went well you should get the output plot in example/script_out.png :
-
-![Alt text](example/script_out.png)
+The script generates the following example of gravity estimate from IMU data:
+![example_imu](example/script_out.png)

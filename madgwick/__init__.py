@@ -11,7 +11,7 @@ Author: Romain Fayat, June 2020
 import numpy as np
 from ahrs.filters import Madgwick as Madgwick_ahrs
 from ahrs.common.orientation import acc2q, am2q
-from madgwick.madgwick_cython import CprodQv, madgwickIMU, madgwickAHRS
+from .madgwick_cython import CprodQv, madgwickIMU, madgwickAHRS
 
 
 class Madgwick(Madgwick_ahrs):
